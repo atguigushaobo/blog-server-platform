@@ -45,11 +45,11 @@ public class LoginServiceImpl implements LoginService {
             throw new CaptchaExpiredException(MessageConstant.CAPTCHA_EXPIRED);
         }else if(!session.isNew() && null != session.getAttribute("uuid")){
             String uuid = (String)session.getAttribute("uuid");
-            Integer code = (Integer)session.getAttribute("code");
+            String code = (String)session.getAttribute("code");
             if(!uuid.equals(userLoginDTO.getUuid()) ){
                 throw new CaptchaExpiredException(MessageConstant.CAPTCHA_EXPIRED);
             }
-            if(!(code == userLoginDTO.getCode())){
+            if(!(code.equals(userLoginDTO.getCode().toString()))){
                 throw new CaptchaIncorrectException(MessageConstant.CAPTCHA_ERROR);
             }
             //条件查询

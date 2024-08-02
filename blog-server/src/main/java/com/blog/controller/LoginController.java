@@ -5,6 +5,7 @@ import com.blog.result.Result;
 import com.blog.service.impl.CaptchaImageService;
 import com.blog.service.impl.LoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ public class LoginController {
      * @param userLoginDTO
      * @return
      */
+    @PostMapping
     public Result<String> login(@RequestBody UserLoginDTO userLoginDTO, HttpServletRequest request){
         String token = loginService.loginCheck(userLoginDTO,request);
         return Result.success(token);

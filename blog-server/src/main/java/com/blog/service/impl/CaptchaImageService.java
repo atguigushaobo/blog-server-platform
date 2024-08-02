@@ -63,7 +63,7 @@ public class CaptchaImageService {
             session.setAttribute("uuid",uuid);
             session.setMaxInactiveInterval(EXPIRED_TIME);
         }
-
+        log.info("生成图片验证码uuid:{}",uuid);
         return captchaImageVO;
     }
 
