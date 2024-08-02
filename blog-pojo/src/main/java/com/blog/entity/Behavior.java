@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Behavior {
+public class Behavior implements Serializable {
     private Long behaviorId;
     private Long articleId;
     private Long userId;

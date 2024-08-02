@@ -4,12 +4,16 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.RandomUtil;
+import com.blog.properties.CaptchaImageProperties;
 import com.blog.vo.CaptchaImageVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -22,23 +26,44 @@ import static cn.hutool.core.img.ImgUtil.toBufferedImage;
 @Service
 @Slf4j
 public class CaptchaImageService {
-    public CaptchaImageVO getShearCaptcha(HttpServletResponse response) throws IOException {
+    @Autowired
+    private CaptchaImageProperties captchaImageProperties;
+    private static final Integer EXPIRED_TIME = 60;//设置session的过期时间，即我们图片验证码的过期时间
+    public CaptchaImageVO getShearCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
         CaptchaImageVO captchaImageVO = new CaptchaImageVO();
+
         //定义图形验证码的长、宽、验证码字符数、干扰线宽度
-        ShearCaptcha shearCaptcha = CaptchaUtil.createShearCaptcha(150, 50,4,3);
+        ShearCaptcha shearCaptcha = CaptchaUtil.createShearCaptcha(captchaImageProperties.getWidth()
+                , captchaImageProperties.getHeight()
+                ,captchaImageProperties.getCodeCount()
+                ,captchaImageProperties.getThickness());
         //设置背景颜色
-        shearCaptcha.setBackground(new Color(249, 251, 220));
+        shearCaptcha.setBackground(new Color(captchaImageProperties.getColorR()
+                , captchaImageProperties.getColorG()
+                , captchaImageProperties.getColorB()));
         //生成四位验证码
-        String code = RandomUtil.randomNumbers(4);
+        String code = RandomUtil.randomNumbers(captchaImageProperties.getCodeCount());
         //生成验证码图片
         Image image = shearCaptcha.createImage(code);
-
         //准备返回信息
-        //TODO 将生成的uuid存入我们的redis或者其他容器中，在登录的时候进行校验
         String uuid = UUID.randomUUID().toString();
         captchaImageVO.setUuid(uuid);
         //返回验证码信息
         captchaImageVO.setImage(responseCode(response, code, image,uuid));
+        //利用session存储我们的uuid于服务器中，用于校验登录时的图片验证码信息
+        HttpSession session = request.getSession();
+        if(session.isNew()){
+            session.setAttribute("code",code);
+            session.setAttribute("uuid",uuid);
+            session.setMaxInactiveInterval(EXPIRED_TIME);
+        }else{
+            session.invalidate();
+            session = request.getSession();
+            session.setAttribute("code",code);
+            session.setAttribute("uuid",uuid);
+            session.setMaxInactiveInterval(EXPIRED_TIME);
+        }
+
         return captchaImageVO;
     }
 

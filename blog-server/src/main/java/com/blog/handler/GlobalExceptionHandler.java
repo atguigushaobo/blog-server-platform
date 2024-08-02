@@ -27,18 +27,4 @@ public class GlobalExceptionHandler {
         log.error("异常信息：{}", ex.getMessage());
         return Result.error(500,ex.getMessage());
     }
-
-    /**
-     * 捕获并处理我们抛出的业务异常
-     * @param ex
-     * @return
-     */
-    @ExceptionHandler(ImageGenerateFailedException.class)
-    public Result ImageGenerateFailedException(ImageGenerateFailedException ex){
-        String msg = ex.getMessage();
-        if(msg.contains(MessageConstant.IMAGEGENERATEFAILED)){
-            return Result.error(500,msg);
-        }
-        return Result.error(500,MessageConstant.UNKNOWERROR);
-    }
 }

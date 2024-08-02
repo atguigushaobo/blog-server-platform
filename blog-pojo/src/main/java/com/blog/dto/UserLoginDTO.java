@@ -2,9 +2,12 @@ package com.blog.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class UserLoginDTO {
+public class UserLoginDTO implements Serializable {
     private String username;
     private String password;
-    private String code;//验证码信息
+    private String uuid;//验证码信息
+    private Integer code;
 }
