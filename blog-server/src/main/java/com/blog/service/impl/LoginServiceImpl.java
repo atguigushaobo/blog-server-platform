@@ -42,7 +42,8 @@ public class LoginServiceImpl implements LoginService {
     public String loginCheck(UserLoginDTO userLoginDTO, HttpServletRequest request) {
         HttpSession session = request.getSession();
         if(session.isNew()){
-            throw new CaptchaExpiredException(MessageConstant.CAPTCHA_EXPIRED);
+            session.invalidate();
+            throw new CaptchaExpiredException(MessageConstant.CAPTCHA_NOT_FOUND);
         }else if(!session.isNew() && null != session.getAttribute("uuid")){
             String uuid = (String)session.getAttribute("uuid");
             String code = (String)session.getAttribute("code");
