@@ -1,12 +1,12 @@
-CREATE DATABASE  IF NOT EXISTS `selab-blog` ;
-USE `selab-blog`;
+CREATE DATABASE  IF NOT EXISTS `selab_blog` ;
+USE `selab_blog`;
 
 
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
                          `user_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键，用户id',
-                         `username` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '用户名',
+                         `username` varchar(32) unique COLLATE utf8_bin NOT NULL COMMENT '用户名',
                          `password` varchar(128) NOT NULL COMMENT '密码',
                          `phone` varchar(11)  NOT NULL COMMENT '手机号码',
                          `email` varchar(20)   NOT NULL COMMENT '邮件',

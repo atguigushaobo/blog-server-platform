@@ -1,4 +1,5 @@
 package com.blog.config;
+import com.blog.interceptor.JwtTokenInterceptor;
 import com.blog.json.JacksonObjectMapper;
 import com.github.pagehelper.PageInterceptor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,5 +63,16 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         converter.setObjectMapper(new JacksonObjectMapper());
         converters.add(0,converter);//因为mvc内部配置有多个信息对象转换器，我们尽量将我们的JSON对象转换器放得靠前一点
+    }
+
+    /**
+     * 设置拦截器进行jwt校验
+     * @param registry
+     */
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new JwtTokenInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login","/captchaImage");
     }
 }
