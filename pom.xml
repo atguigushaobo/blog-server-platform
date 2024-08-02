@@ -27,8 +27,9 @@
         <commons.lang>2.6</commons.lang>
         <jjwt>0.9.1</jjwt>
         <knife4j>3.0.2</knife4j>
-        <pagehelper>1.3.0</pagehelper>
+        <pagehelper>1.4.1</pagehelper>
         <druid>1.2.1</druid>
+        <hutool>5.7.15</hutool>
     </properties>
 
 
@@ -81,6 +82,11 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>${pagehelper}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool}</version>
         </dependency>
     </dependencies>
 

@@ -1,6 +1,7 @@
 server:
-  port: 8080
-
+  port: 8088
+  servlet:
+    context-path: /
 spring:
   profiles:
     active: dev
@@ -29,8 +30,8 @@ logging:
 blog:
   jwt:
     # 设置jwt签名加密时使用的秘钥
-    admin-secret-key:
+    user-secret-key: blog
     # 设置jwt过期时间
-    admin-ttl:
+    user-ttl: 7200000 # 两小时
     # 设置前端传递过来的令牌名称
-    admin-token-name:
+    user-token-name: Authorization
