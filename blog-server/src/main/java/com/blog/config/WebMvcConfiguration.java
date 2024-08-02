@@ -25,6 +25,8 @@ import java.util.List;
 @Configuration
 @Slf4j
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
+    @Autowired
+    private JwtTokenInterceptor jwtTokenInterceptor;
     /**
      * 通过knife4j生成管理层接口文档
      * @return
@@ -71,7 +73,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      */
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new JwtTokenInterceptor())
+        registry.addInterceptor(jwtTokenInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login","/captchaImage");
     }

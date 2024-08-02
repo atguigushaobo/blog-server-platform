@@ -26,6 +26,7 @@
         <fastjson>1.2.76</fastjson>
         <commons.lang>2.6</commons.lang>
         <jjwt>0.9.1</jjwt>
+        <jaxb-api>2.3.1</jaxb-api>
         <knife4j>3.0.2</knife4j>
         <pagehelper>1.4.1</pagehelper>
         <druid>1.2.1</druid>
@@ -41,7 +42,7 @@
             <artifactId>lombok</artifactId>
             <version>${lombok}</version>
         </dependency>
-        <!--token以及fastjson的相关依赖-->
+        <!--fastjson的相关依赖-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -51,6 +52,12 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>${commons.lang}</version>
+        </dependency>
+        <!--token相关依赖-->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb-api}</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
