@@ -39,6 +39,6 @@ public class GlobalExceptionHandler {
         if(msg.contains(MessageConstant.IMAGEGENERATEFAILED)){
             return Result.error(500,msg);
         }
-        return Result.error(500,msg);
+        return Result.error(500,MessageConstant.UNKNOWERROR);
     }
 }
