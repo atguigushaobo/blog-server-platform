@@ -13,8 +13,23 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 条件查询用户信息
+     * @param user
+     * @return
+     */
     @Override
     public List<User> getUser(User user) {
         return userMapper.getUser(user);
+    }
+
+    /**
+     * 插入注册用户信息
+     * @param user
+     * @return
+     */
+    @Override
+    public void insertUser(User user) {
+        userMapper.insertUser(user);
     }
 }

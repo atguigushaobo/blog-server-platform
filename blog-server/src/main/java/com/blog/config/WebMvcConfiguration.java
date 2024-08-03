@@ -75,6 +75,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtTokenInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login","/captchaImage");
+                .excludePathPatterns("/login","/captchaImage","/user/regist");
     }
 }

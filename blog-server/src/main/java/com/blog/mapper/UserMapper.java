@@ -12,4 +12,11 @@ public interface UserMapper {
      * @return
      */
     List<User> getUser(User user);
+
+    /**
+     * 插入新用户信息
+     * @param user
+     * @return
+     */
+    Long insertUser(User user);
 }

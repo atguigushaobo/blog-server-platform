@@ -3,7 +3,8 @@ package com.blog.controller;
 import com.blog.dto.UserLoginDTO;
 import com.blog.result.Result;
 import com.blog.service.impl.CaptchaImageService;
-import com.blog.service.impl.LoginServiceImpl;
+import com.blog.service.impl.LoginService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/login")
 public class LoginController {
     @Autowired
-    private LoginServiceImpl loginService;
+    private LoginService loginService;
 
 
     /**

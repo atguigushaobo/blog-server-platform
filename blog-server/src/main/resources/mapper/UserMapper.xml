@@ -3,11 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.blog.mapper.UserMapper">
-<!--    List<User> getUser(User user);-->
+
+    <!--    List<User> getUser(User user);-->
     <select id="getUser" resultType="user">
-        select * from User
+        select user_id id,username,password,phone,email,sex,create_time,update_time,status from User
         <where>
-            status = '1'
+            status = 1
             <if test="id != null">and user_id = #{id}</if>
             <if test="username != null">and username = #{username}</if>
             <if test="password != null">and password = #{password}</if>
@@ -17,5 +18,10 @@
         </where>
 
     </select>
+<!--    Long insertUser(User user);-->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        insert into user (username,password,phone,email,sex,create_time,update_time) values
+                        (#{username},#{password},#{phone},#{email},#{sex},#{createTime},#{updateTime})
+    </insert>
 
 </mapper>

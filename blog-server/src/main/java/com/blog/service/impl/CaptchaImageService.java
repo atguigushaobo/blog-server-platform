@@ -4,10 +4,12 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.RandomUtil;
+import com.blog.constant.SessionConstant;
 import com.blog.properties.CaptchaImageProperties;
 import com.blog.vo.CaptchaImageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -28,7 +30,6 @@ import static cn.hutool.core.img.ImgUtil.toBufferedImage;
 public class CaptchaImageService {
     @Autowired
     private CaptchaImageProperties captchaImageProperties;
-    private static final Integer EXPIRED_TIME = 60;//设置session的过期时间，即我们图片验证码的过期时间
     public CaptchaImageVO getShearCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
         CaptchaImageVO captchaImageVO = new CaptchaImageVO();
 
@@ -53,15 +54,11 @@ public class CaptchaImageService {
         //利用session存储我们的uuid于服务器中，用于校验登录时的图片验证码信息
         HttpSession session = request.getSession();
         if(session.isNew()){
-            session.setAttribute("code",code);
-            session.setAttribute("uuid",uuid);
-            session.setMaxInactiveInterval(EXPIRED_TIME);
+            setSession(session,code,uuid);
         }else{
             session.invalidate();
             session = request.getSession();
-            session.setAttribute("code",code);
-            session.setAttribute("uuid",uuid);
-            session.setMaxInactiveInterval(EXPIRED_TIME);
+            setSession(session,code,uuid);
         }
         log.info("生成图片验证码uuid:{}",uuid);
         return captchaImageVO;
@@ -85,6 +82,12 @@ public class CaptchaImageService {
         return Base64.getEncoder().encodeToString(imageInBytes);
         //输出
 //            IoUtil.write(response.getOutputStream(), true, imageInBytes);
-
     }
+    private void setSession(HttpSession session, String code, String uuid){
+        session.setAttribute(SessionConstant.CODE_KEY,code);
+        session.setAttribute(SessionConstant.UUID_KEY,uuid);
+        session.setAttribute(SessionConstant.START_KEY,System.currentTimeMillis());
+        session.setMaxInactiveInterval(SessionConstant.SESSION_TIME_SET);
+    }
+
 }
