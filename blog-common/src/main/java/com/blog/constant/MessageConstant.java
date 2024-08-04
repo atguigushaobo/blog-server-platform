@@ -11,4 +11,6 @@ public class MessageConstant {
     public static final String ACCOUNT_OR_PWD_ERROR = "账号或密码输入错误";
     public static final String CAPTCHA_NOT_FOUND = "还未获取图片验证码";
     public static final String ACCOUNT_ALLREADY_EXIST = "用户名账号已存在";
+    public static final String FILE_NOT_FOUND_EXCEPTION = "文件信息获取失败";
+    public static final String FILE_UPLOAD_FAILED = "文件上传失败";
 }
