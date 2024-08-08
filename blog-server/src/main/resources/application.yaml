@@ -1,5 +1,5 @@
 server:
-  port: 8088
+  port: 8888
   servlet:
     context-path: /
 spring:
@@ -47,3 +47,7 @@ blog:
       color-r: 249
       color-g: 251
       color-b: 220
+    # 有关图片作为静态资源上传的相关设置
+  file:
+    real-path: blog-server/src/main/resources/static/images #文件存储在项目中的位置
+    url: http://localhost:8888/
