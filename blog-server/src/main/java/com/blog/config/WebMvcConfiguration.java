@@ -54,8 +54,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         registry.addResourceHandler("/static/images/**").addResourceLocations("classpath:/static/images/");
         //是在target目录下寻找资源，默认是web作为根目录的资源优先查找
-        //这里当时出现了token验证失败的问题：原因是因为我们这里的静态资源handler设为了/**，在第一次被拦截的时候被判定为不属于HandlerAdapter，
-        // 是先将其作为静态资源来进行查找的，所以我们拦截器中的逻辑才会把他放过去
     }
     /**
      * 配置日期类型数据格式转换器
