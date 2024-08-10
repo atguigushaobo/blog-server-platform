@@ -40,7 +40,7 @@ public class CommonController {
             imagesFile.mkdir();
         }
         String realPath = imagesFile.getAbsolutePath();
-        String imagePath = realPath + "\\" + newFileName;
+        String imagePath = realPath + File.separator + newFileName;
         log.info("文件上传至{}",imagePath);
         try {
             file.transferTo(new File(imagePath));//需要注意的是我们的transferTo方法只能调用一次，多次会抛出异常
@@ -52,6 +52,7 @@ public class CommonController {
         log.info("文件{}上传成功",originalFilename);
         //拼接url
         String url = fileProperties.getUrl() + newFileName;
+        log.info("图片访问路径{}",url);
         FileUploadVO fileUploadVO = FileUploadVO.builder()
                 .newFileName(newFileName)
                 .url(url)
