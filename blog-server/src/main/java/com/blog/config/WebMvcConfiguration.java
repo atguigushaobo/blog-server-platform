@@ -52,7 +52,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/images/");
+        registry.addResourceHandler("/static/images/**").addResourceLocations("classpath:/static/images/");
         //是在target目录下寻找资源，默认是web作为根目录的资源优先查找
     }
     /**
