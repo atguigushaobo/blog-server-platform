@@ -12,4 +12,9 @@
         where article_id = #{id}
     </update>
 
+    <select id="queryArticleById" resultType="article">
+        select user_id userId from article
+        where article_id = #{id}
+    </select>
+
 </mapper>

@@ -1,5 +1,6 @@
 package com.blog.service.impl;
 
+import com.blog.context.BaseContext;
 import com.blog.entity.Article;
 import com.blog.mapper.ArticleMapper;
 import com.blog.result.Result;
@@ -22,11 +23,18 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
 
     @Override
-    public Result update(Article article) {
-        if (article.getId() == null) {
+    public Result update(Article article1) {
+        Long articleId = article1.getId();
+        if (articleId == null) {
             return Result.error(50010, "没有指定修改文章的Id");
         }
-        articleMapper.update(article);
-        return Result.success(null);
+        //根据id查询文章的发布者id，判断是否能够修改
+        int userId = articleMapper.queryArticleById(articleId).getUserId();
+        long userIdInput = BaseContext.getCurrentId();
+        if (userId == userIdInput){
+            articleMapper.update(article1);
+            return Result.success(null);
+        }
+        return Result.error(50011, "非发布者");
     }
 }

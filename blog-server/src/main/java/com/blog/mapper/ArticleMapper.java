@@ -1,7 +1,6 @@
 package com.blog.mapper;
 
 import com.blog.entity.Article;
-import org.apache.ibatis.annotations.Update;
 
 /**
  * ClassName: ArticleMapper
@@ -14,4 +13,5 @@ import org.apache.ibatis.annotations.Update;
  */
 public interface ArticleMapper {
     int update(Article article);
+    Article queryArticleById(Long id);
 }
