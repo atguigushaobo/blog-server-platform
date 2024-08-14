@@ -31,9 +31,9 @@ public interface ArticleMapper extends BaseMapper<Article> {
     Integer deleteByArticleId(Long id);
 
 
-    int updateArticle(Article article);
+    int updateArticle(com.blog.entity.Article article);
 
-    int saveArticle(Article article);
+    int saveArticle(com.blog.entity.Article article);
 
 }
 

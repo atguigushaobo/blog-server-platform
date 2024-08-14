@@ -17,7 +17,7 @@ public interface ArticleService extends IService<Article> {
 
     Result selectById(Long id);
 
-    Result saveArticle(SaveArticle saveArticle,String token);
+    Result saveArticle(com.blog.entity.Article article);
 
     Result selectByArticleId(Long id);
 
@@ -25,6 +25,6 @@ public interface ArticleService extends IService<Article> {
 
     Result deleteArticle(Long id);
 
-    Result updateArticle(SelectArticle selectArticle);
+    Result updateArticle(com.blog.entity.Article article);
 
 }

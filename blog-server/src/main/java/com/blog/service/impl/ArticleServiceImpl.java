@@ -1,6 +1,8 @@
 package com.blog.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.blog.constant.MessageConstant;
+import com.blog.context.BaseContext;
 import com.blog.pojo.Article;
 import com.blog.pojo.SaveArticle;
 import com.blog.pojo.SelectArticle;
@@ -14,6 +16,7 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.naming.Context;
 import java.util.Date;
 import java.util.List;
 
@@ -38,34 +41,45 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
 
     @Override
     public Result selectById(Long id) {
-        List list = articleMapper.selectByUserId(id);
-        return Result.success(list);
+        long userId = BaseContext.getCurrentId();
+        if (userId ==  id) {
+            List list = articleMapper.selectByUserId(id);
+            return Result.success(list);
+        }
+        return Result.error(50014, MessageConstant.RIGHT_ERROR);
     }
 
     @Override
-    public Result saveArticle(SaveArticle saveArticle,String token) {
-        //解析token得到userId
-       Claims claims = JwtUtil.parseJWT(jwtProperties.getUserSecretKey(), token);
-        Long userid  = (Long)claims.get("userId");
-        Article article = new Article();
-        article.setUserId(userid);
-        article.setTitle(saveArticle.getTitle());
-        article.setContent(saveArticle.getContent());
-        article.setImage(saveArticle.getImage());
-        article.setPublishTime(new Date());
-        int i = articleMapper.saveArticle(article);
-        return Result.success(null);
+    public Result saveArticle(com.blog.entity.Article saveArticle) {
+        //从BaseContext中获取userId
+        Long userid = BaseContext.getCurrentId();
+        //测试使用userId
+//        Long userid = 1L;
+        saveArticle.setUserId(userid);
+        saveArticle.setPublishTime(new Date());
+        saveArticle.setUpdateTime(new Date());
+        int i = articleMapper.saveArticle(saveArticle);
+        if (i > 0) {
+            return Result.success(null);
+        }
+        return Result.error(50013, MessageConstant.UNKNOWERROR);
     }
 
     @Override
     public Result selectByArticleId(Long id) {
         SaveArticle saveArticle = articleMapper.selectByArticleId(id);
+        if (saveArticle == null) {
+            return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);
+        }
         return Result.success(saveArticle);
     }
 
     @Override
     public Result articleDetails(Long id) {
         ShowArticle showArticle = articleMapper.showArticle(id);
+        if (showArticle == null) {
+            return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);
+        }
         Integer comments = articleMapper.countComment(id);
         showArticle.setCommentCount(comments);
         return Result.success(showArticle);
@@ -73,26 +87,41 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
 
     @Override
     public Result deleteArticle(Long id) {
-        Integer i = articleMapper.deleteByArticleId(id);
-        if(i<=0){
-            return Result.error(405,"删除失败");
+        //非用户本人不能删除
+        Long userId = BaseContext.getCurrentId();
+        //测试使用userId
+//        Long userId = 2L;
+        ShowArticle showArticle = articleMapper.showArticle(id);
+        if (showArticle == null) {
+            return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);
         }
-        System.out.println(i);
-        return Result.success(null);
+        long articlePublisherId = showArticle.getUserId();
+        if (userId == articlePublisherId) {
+            Integer i = articleMapper.deleteByArticleId(id);
+            if(i<=0){
+                return Result.error(50016,MessageConstant.UNKNOWERROR);
+            }
+            return Result.success(null);
+        }
+        return Result.error(50015, MessageConstant.RIGHT_ERROR);
     }
 
     @Override
-    public Result updateArticle(SelectArticle selectArticle) {
-        Article article = new Article();
-        article.setArticleId(selectArticle.getId());
-        article.setTitle(selectArticle.getTitle());
-        article.setContent(selectArticle.getContent());
-        article.setImage(selectArticle.getImage());
+    public Result updateArticle(com.blog.entity.Article article) {
+        //判断文章的发布者Id和当前Id是否相同
+//        Long userId = BaseContext.getCurrentId();
+        //测试Id
+        long userId = 2L;
+        ShowArticle showArticle = articleMapper.showArticle(article.getId());
+        if (showArticle == null) {
+            return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);
+        }
+        long articlePublisherId = showArticle.getUserId();
+        if (userId != articlePublisherId) {
+            return Result.error(50016, MessageConstant.RIGHT_ERROR);
+        }
         article.setUpdateTime(new Date());
         int i = articleMapper.updateArticle(article);
-        if(i<=0){
-            return Result.error(405,"更改文章失败");
-        }
         return Result.success(null);
     }
 }

@@ -16,10 +16,10 @@ public class Article implements Serializable {
     private Long id;//自增主键
     private String title;
     private String content;
-    private Integer userId;
+    private Long userId;
     private String username;
     private String image;
     private Integer articleLike;
-    private Date publicTime;
+    private Date publishTime;
     private Date updateTime;
 }

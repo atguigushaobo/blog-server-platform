@@ -21,12 +21,12 @@
         update_time,article_like
     </sql>
     <insert id="saveArticle">
-        insert into article(article_id,title,content,user_id,image,publish_time,article_like)
-        values (#{articleId},#{title},#{content},#{userId},#{image},#{publishTime},0);
+        insert into article(title,content,user_id,image,publish_time,article_like,update_time)
+        values (#{title},#{content},#{userId},#{image},#{publishTime},0,#{updateTime});
     </insert>
     <update id="updateArticle">
         update article set title=#{title},content=#{content},image=#{image},update_time=#{updateTime}
-        where article_id=#{articleId};
+        where article_id=#{id};
     </update>
 
     <delete id="deleteByArticleId" >

@@ -1,6 +1,6 @@
 package com.blog.controller;
 
-import com.blog.pojo.SaveArticle;
+import com.blog.entity.Article;
 import com.blog.pojo.SelectArticle;
 import com.blog.result.Result;
 import com.blog.service.ArticleService;
@@ -22,33 +22,33 @@ public class ArticleController {
         return result;
     }
     @GetMapping("selectByUserId/{id}")
-    public Result selectByUserId(@PathVariable Long id){
+    public Result selectByUserId(@PathVariable("id") Long id){
         Result result = articleService.selectById(id);
         return result;
     }
     @PostMapping("saveArticle")
-    public Result saveArticle(@RequestBody SaveArticle saveArticle,@RequestHeader String token){
-        Result result = articleService.saveArticle(saveArticle,token);
+    public Result saveArticle(@RequestBody Article saveArticle){
+        Result result = articleService.saveArticle(saveArticle);
         return  result;
     }
     @GetMapping("selectByArticleId/{id}")
-    public Result selectByArticleId(@PathVariable Long id){
+    public Result selectByArticleId(@PathVariable("id") Long id){
         Result result = articleService.selectByArticleId(id);
         return result;
     }
     @GetMapping("articleDetails/{id}")
-    public Result articleDetails(@PathVariable Long id){
+    public Result articleDetails(@PathVariable("id") Long id){
         Result result = articleService.articleDetails(id);
         return result;
     }
     @DeleteMapping("deleteArticle/{id}")
-    public Result deleteArticle(@PathVariable Long id){
+    public Result deleteArticle(@PathVariable("id") Long id){
         Result result = articleService.deleteArticle(id);
         return result;
     }
     @PutMapping("updateArticle")
-    public Result updateArticle(@RequestBody SelectArticle selectArticle){
-        Result result = articleService.updateArticle(selectArticle);
+    public Result updateArticle(@RequestBody Article article){
+        Result result = articleService.updateArticle(article);
         return result;
     }
 
