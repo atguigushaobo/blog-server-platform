@@ -1,12 +1,20 @@
 package com.blog.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.blog.constant.MessageConstant;
 import com.blog.context.BaseContext;
 import com.blog.entity.Article;
 import com.blog.mapper.ArticleMapper;
+import com.blog.pojo.SaveArticle;
+import com.blog.pojo.ShowArticle;
+import com.blog.properties.JwtProperties;
 import com.blog.result.Result;
 import com.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 /**
 * @author 86155
@@ -14,12 +22,9 @@ import org.springframework.stereotype.Service;
 * @createDate 2024-08-09 11:05:18
 */
 @Service
-public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
-    implements ArticleService{
+public class ArticleServiceImpl implements ArticleService{
     @Autowired
     private ArticleMapper articleMapper;
-    @Autowired
-    private JwtProperties jwtProperties;
     @Override
     public Result load() {
         List list = articleMapper.load();
@@ -95,7 +100,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     }
 
     @Override
-    public Result updateArticle(com.blog.entity.Article article) {
+    public Result updateArticle(Article article) {
         //判断文章的发布者Id和当前Id是否相同
 //        Long userId = BaseContext.getCurrentId();
         //测试Id
