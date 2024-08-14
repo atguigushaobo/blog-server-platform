@@ -18,38 +18,31 @@ public class ArticleController {
      */
     @GetMapping("load")
     public Result load(){
-        Result result =  articleService.load();
-        return result;
+        return articleService.load();
     }
     @GetMapping("selectByUserId/{id}")
     public Result selectByUserId(@PathVariable("id") Long id){
-        Result result = articleService.selectById(id);
-        return result;
+        return articleService.selectById(id);
     }
     @PostMapping("saveArticle")
     public Result saveArticle(@RequestBody Article saveArticle){
-        Result result = articleService.saveArticle(saveArticle);
-        return  result;
+        return articleService.saveArticle(saveArticle);
     }
     @GetMapping("selectByArticleId/{id}")
     public Result selectByArticleId(@PathVariable("id") Long id){
-        Result result = articleService.selectByArticleId(id);
-        return result;
+        return articleService.selectByArticleId(id);
     }
     @GetMapping("articleDetails/{id}")
     public Result articleDetails(@PathVariable("id") Long id){
-        Result result = articleService.articleDetails(id);
-        return result;
+        return articleService.articleDetails(id);
     }
     @DeleteMapping("deleteArticle/{id}")
     public Result deleteArticle(@PathVariable("id") Long id){
-        Result result = articleService.deleteArticle(id);
-        return result;
+        return articleService.deleteArticle(id);
     }
     @PutMapping("updateArticle")
     public Result updateArticle(@RequestBody Article article){
-        Result result = articleService.updateArticle(article);
-        return result;
+        return articleService.updateArticle(article);
     }
 
 }

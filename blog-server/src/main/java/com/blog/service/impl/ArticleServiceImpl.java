@@ -2,19 +2,15 @@ package com.blog.service.impl;
 
 import com.blog.constant.MessageConstant;
 import com.blog.context.BaseContext;
+import com.blog.entity.Article;
+import com.blog.mapper.ArticleMapper;
 import com.blog.pojo.SaveArticle;
-import com.blog.pojo.SelectArticle;
 import com.blog.pojo.ShowArticle;
-import com.blog.properties.JwtProperties;
 import com.blog.result.Result;
 import com.blog.service.ArticleService;
-import com.blog.mapper.ArticleMapper;
-import com.blog.utils.JwtUtil;
-import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.naming.Context;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +45,7 @@ public class ArticleServiceImpl implements ArticleService{
         //从BaseContext中获取userId
         Long userid = BaseContext.getCurrentId();
         //测试使用userId
-//      userid = 1L;
+//        Long userid = 1L;
         saveArticle.setUserId(userid);
         saveArticle.setPublishTime(new Date());
         saveArticle.setUpdateTime(new Date());
@@ -84,8 +80,8 @@ public class ArticleServiceImpl implements ArticleService{
     public Result deleteArticle(Long id) {
         //非用户本人不能删除
         Long userId = BaseContext.getCurrentId();
-//        测试使用userId
-//        userId = 2L;
+        //测试使用userId
+//        Long userId = 2L;
         ShowArticle showArticle = articleMapper.showArticle(id);
         if (showArticle == null) {
             return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);
@@ -102,11 +98,11 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
-    public Result updateArticle(com.blog.entity.Article article) {
+    public Result updateArticle(Article article) {
         //判断文章的发布者Id和当前Id是否相同
-        Long userId = BaseContext.getCurrentId();
+//        Long userId = BaseContext.getCurrentId();
         //测试Id
-//        long userId = 1L;
+        long userId = 2L;
         ShowArticle showArticle = articleMapper.showArticle(article.getId());
         if (showArticle == null) {
             return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);

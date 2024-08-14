@@ -5,4 +5,4 @@ blog:
     port: 3306
     database: selab_blog
     username: root
-    password: gsx12345678R
+    password: 123456

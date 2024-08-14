@@ -31,6 +31,10 @@
         <pagehelper>1.4.1</pagehelper>
         <druid>1.2.1</druid>
         <hutool>5.7.15</hutool>
+        <!--UTF-8编码项目-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
 
 
