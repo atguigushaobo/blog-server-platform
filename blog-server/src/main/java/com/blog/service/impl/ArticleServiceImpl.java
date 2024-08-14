@@ -1,13 +1,11 @@
 package com.blog.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.blog.constant.MessageConstant;
 import com.blog.context.BaseContext;
 import com.blog.entity.Article;
 import com.blog.mapper.ArticleMapper;
 import com.blog.pojo.SaveArticle;
 import com.blog.pojo.ShowArticle;
-import com.blog.properties.JwtProperties;
 import com.blog.result.Result;
 import com.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -37,7 +37,7 @@ public class CommonController {
         String newFileName = UUID.randomUUID().toString().replace("-","") + extention;
         File imagesFile = new File(fileProperties.getRealPath());//通过相对路径获取绝对路径
         if(!imagesFile.exists()){  // 不存在，则创建该文件夹
-            imagesFile.mkdir();
+            imagesFile.mkdirs();
         }
         String realPath = imagesFile.getAbsolutePath();
         String imagePath = realPath + File.separator + newFileName;
@@ -45,6 +45,10 @@ public class CommonController {
         try {
             file.transferTo(new File(imagePath));//需要注意的是我们的transferTo方法只能调用一次，多次会抛出异常
             String targetPath = (this.getClass().getClassLoader().getResource("") + "static/images/" + newFileName).replace("/","\\").replace("file:\\","");
+            File targetDirs = new File((this.getClass().getClassLoader().getResource("") + "static/images").replace("/","\\").replace("file:\\",""));
+            if(!targetDirs.exists()){
+                targetDirs.mkdirs();  // 若目标路径不存在，则创建
+            }
             FileCopyUtils.copy(new File(imagePath),new File(targetPath));
         } catch (IOException e) {
             throw new FileUploadFailedException(MessageConstant.FILE_UPLOAD_FAILED);
