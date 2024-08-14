@@ -20,6 +20,6 @@ public class Article implements Serializable {
     private String username;
     private String image;
     private Integer articleLike;
-    private Date publicTime;
+    private Date publishTime;
     private Date updateTime;
 }
