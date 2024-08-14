@@ -29,7 +29,7 @@ public class ArticleServiceImpl implements ArticleService {
             return Result.error(50010, "没有指定修改文章的Id");
         }
         //根据id查询文章的发布者id，判断是否能够修改
-        int userId = articleMapper.queryArticleById(articleId).getUserId();
+        Long userId = articleMapper.queryArticleById(articleId).getUserId();
         long userIdInput = BaseContext.getCurrentId();
         if (userId == userIdInput){
             articleMapper.update(article1);
