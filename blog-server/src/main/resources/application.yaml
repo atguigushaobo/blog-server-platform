@@ -51,9 +51,3 @@ blog:
   file:
     real-path: blog-server/src/main/resources/static/images #文件存储在项目中的位置
     url: http://localhost:8888/static/images/
-mybatis-plus:
-  type-aliases-package: com.blog.entity
-  mapper-locations: classpath:mapper/*.xml
-  configuration:
-    #开启驼峰命名
-    map-underscore-to-camel-case: true

@@ -1,7 +1,5 @@
 package com.blog.mapper;
 
-import com.blog.pojo.Article;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.blog.pojo.SaveArticle;
 import com.blog.pojo.SelectArticle;
 import com.blog.pojo.ShowArticle;
@@ -16,7 +14,7 @@ import java.util.List;
 * @Entity com.blog.pojo.Article
 */
 @Mapper
-public interface ArticleMapper extends BaseMapper<Article> {
+public interface ArticleMapper {
 
     List<SelectArticle> load();
 

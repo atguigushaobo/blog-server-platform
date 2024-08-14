@@ -1,9 +1,7 @@
 package com.blog.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.blog.constant.MessageConstant;
 import com.blog.context.BaseContext;
-import com.blog.pojo.Article;
 import com.blog.pojo.SaveArticle;
 import com.blog.pojo.SelectArticle;
 import com.blog.pojo.ShowArticle;
@@ -26,12 +24,9 @@ import java.util.List;
 * @createDate 2024-08-09 11:05:18
 */
 @Service
-public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
-    implements ArticleService{
+public class ArticleServiceImpl implements ArticleService{
     @Autowired
     private ArticleMapper articleMapper;
-    @Autowired
-    private JwtProperties jwtProperties;
     @Override
     public Result load() {
         List list = articleMapper.load();
@@ -54,7 +49,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         //从BaseContext中获取userId
         Long userid = BaseContext.getCurrentId();
         //测试使用userId
-//        Long userid = 1L;
+//      userid = 1L;
         saveArticle.setUserId(userid);
         saveArticle.setPublishTime(new Date());
         saveArticle.setUpdateTime(new Date());
@@ -89,8 +84,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     public Result deleteArticle(Long id) {
         //非用户本人不能删除
         Long userId = BaseContext.getCurrentId();
-        //测试使用userId
-//        Long userId = 2L;
+//        测试使用userId
+//        userId = 2L;
         ShowArticle showArticle = articleMapper.showArticle(id);
         if (showArticle == null) {
             return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);
@@ -109,9 +104,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     @Override
     public Result updateArticle(com.blog.entity.Article article) {
         //判断文章的发布者Id和当前Id是否相同
-//        Long userId = BaseContext.getCurrentId();
+        Long userId = BaseContext.getCurrentId();
         //测试Id
-        long userId = 2L;
+//        long userId = 1L;
         ShowArticle showArticle = articleMapper.showArticle(article.getId());
         if (showArticle == null) {
             return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);

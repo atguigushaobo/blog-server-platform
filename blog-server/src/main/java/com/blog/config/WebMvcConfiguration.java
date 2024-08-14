@@ -70,10 +70,10 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * 设置拦截器进行jwt校验
      * @param registry
      */
-//    @Override
-//    protected void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(jwtTokenInterceptor)
-//                .addPathPatterns("/**")
-//                .excludePathPatterns("/login","/captchaImage","/user/regist");
-//    }
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(jwtTokenInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login","/captchaImage","/user/regist");
+    }
 }

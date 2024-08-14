@@ -1,9 +1,6 @@
 package com.blog.service;
 
-import com.blog.pojo.Article;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.blog.pojo.SaveArticle;
-import com.blog.pojo.SelectArticle;
+
 import com.blog.result.Result;
 
 /**
@@ -11,7 +8,7 @@ import com.blog.result.Result;
 * @description 针对表【article(文章)】的数据库操作Service
 * @createDate 2024-08-09 11:05:18
 */
-public interface ArticleService extends IService<Article> {
+public interface ArticleService {
 
     Result load();
 
