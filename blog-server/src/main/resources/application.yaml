@@ -19,7 +19,7 @@ mybatis:
   configuration:
     #开启驼峰命名
     map-underscore-to-camel-case: true
-# 设置springboot的日志级别
+
 logging:
   level:
     com:
@@ -28,26 +28,26 @@ logging:
         service: info
         controller: info
 blog:
-  #自定义token相关参数
+
   jwt:
-    # 设置jwt签名加密时使用的秘钥
+
     user-secret-key: blog
-    # 设置jwt过期时间
-    user-ttl: 7200000 # 两小时
-    # 设置前端传递过来的令牌名称
+
+    user-ttl: 7200000
+
     user-token-name: Authorization
-  #自定以图形验证码相关配置
+
   captcha:
     image:
-      width: 150 # 图形验证码宽度
-      height: 50 # 图形验证码高度
-      code-count: 4 # 随机生成的验证码位数
-      thickness: 3 # 干扰线宽度
-      # 图片背景颜色设置
+      width: 150
+      height: 50
+      code-count: 4
+      thickness: 3
+
       color-r: 249
       color-g: 251
       color-b: 220
-    # 有关图片作为静态资源上传的相关设置
+
   file:
     real-path: blog-server/src/main/resources/static/images #文件存储在项目中的位置
     url: http://localhost:8888/
