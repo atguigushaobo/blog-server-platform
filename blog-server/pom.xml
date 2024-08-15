@@ -64,12 +64,6 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
-        <!--swragger的框架knife4j接口测试文档的相关依赖-->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>${knife4j}</version>
-        </dependency>
         <!--物理分页相关依赖-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
