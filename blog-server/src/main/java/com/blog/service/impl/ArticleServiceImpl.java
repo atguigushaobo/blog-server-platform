@@ -100,9 +100,9 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public Result updateArticle(Article article) {
         //判断文章的发布者Id和当前Id是否相同
-//        Long userId = BaseContext.getCurrentId();
+        Long userId = BaseContext.getCurrentId();
         //测试Id
-        long userId = 2L;
+//        long userId = 2L;
         ShowArticle showArticle = articleMapper.showArticle(article.getId());
         if (showArticle == null) {
             return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);
