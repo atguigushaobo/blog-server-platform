@@ -12,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 public class Behavior implements Serializable {
-    private Long behaviorId;
+    private Long behaviourId;
     private Long articleId;
     private Long userId;
     private Integer isLike;//默认为0,点赞后为1
