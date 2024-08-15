@@ -1,6 +1,5 @@
 package com.blog.pojo;
 
-import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.util.Date;

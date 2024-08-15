@@ -5,7 +5,6 @@ import com.blog.exception.ImageGenerateFailedException;
 import com.blog.result.Result;
 import com.blog.service.impl.CaptchaImageService;
 import com.blog.vo.CaptchaImageVO;
-import javassist.expr.NewArray;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
