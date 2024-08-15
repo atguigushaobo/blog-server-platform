@@ -25,7 +25,20 @@
         values (#{title},#{content},#{userId},#{image},#{publishTime},0,#{updateTime});
     </insert>
     <update id="updateArticle">
-        update article set title=#{title},content=#{content},image=#{image},update_time=#{updateTime}
+        update article
+        <!--set title=#{title},content=#{content},image=#{image},update_time=#{updateTime}-->
+        <set>
+            <if test="title != null">
+                title=#{title},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="image != null">
+                image=#{image},
+            </if>
+        </set>
+        ,update_time=#{updateTime}
         where article_id=#{id};
     </update>
 
