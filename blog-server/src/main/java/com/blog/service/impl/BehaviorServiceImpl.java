@@ -29,7 +29,7 @@ public class BehaviorServiceImpl implements BehaviorService {
         else if(behavior.getIsLike()!=0 && behavior.getIsLike()!=1){
             throw new IsLikeParamException("isLike只能为0或1！");
         }
-        behavior.setUserId(6l);
+        behavior.setUserId(BaseContext.getCurrentId());
         if(behaviorMapper.behaviorExist(behavior)!=null){
             behaviorMapper.behaviorUpdate(behavior);
         }
@@ -56,7 +56,7 @@ public class BehaviorServiceImpl implements BehaviorService {
         {
             throw new ParamException("参数不能为空！");
         }
-        comment.setUserId(7l);
+        comment.setUserId(BaseContext.getCurrentId());
         comment.setCreateTime(new Date());
         behaviorMapper.addComment(comment);
     }
