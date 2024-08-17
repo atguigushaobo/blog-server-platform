@@ -27,10 +27,13 @@
         <commons.lang>2.6</commons.lang>
         <jjwt>0.9.1</jjwt>
         <jaxb-api>2.3.1</jaxb-api>
-        <knife4j>3.0.2</knife4j>
         <pagehelper>1.4.1</pagehelper>
         <druid>1.2.1</druid>
         <hutool>5.7.15</hutool>
+        <!--UTF-8编码项目-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
 
 
@@ -64,12 +67,6 @@
             <artifactId>jjwt</artifactId>
             <version>${jjwt}</version>
         </dependency>
-        <!--swragger的框架knife4j接口测试文档的相关依赖-->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>${knife4j}</version>
-        </dependency>
         <!--springboot整合mybatis相关依赖-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -82,8 +79,6 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>${druid}</version>
         </dependency>
-
-
         <!--物理分页相关依赖-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -96,7 +91,6 @@
             <version>${hutool}</version>
         </dependency>
     </dependencies>
-
     </dependencyManagement>
 
 </project>

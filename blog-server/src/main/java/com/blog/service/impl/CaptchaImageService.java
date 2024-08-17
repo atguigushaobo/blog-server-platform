@@ -89,5 +89,4 @@ public class CaptchaImageService {
         session.setAttribute(SessionConstant.START_KEY,System.currentTimeMillis());
         session.setMaxInactiveInterval(SessionConstant.SESSION_TIME_SET);
     }
-
 }
