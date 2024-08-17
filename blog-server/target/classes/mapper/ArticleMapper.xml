@@ -28,13 +28,13 @@
         update article
         <!--set title=#{title},content=#{content},image=#{image},update_time=#{updateTime}-->
         <set>
-            <if test="title != null">
+            <if test="title != null and title != ''">
                 title=#{title},
             </if>
-            <if test="content != null">
+            <if test="content != null and content != ''">
                 content = #{content},
             </if>
-            <if test="image != null">
+            <if test="image != null and image != ''">
                 image=#{image},
             </if>
         </set>
