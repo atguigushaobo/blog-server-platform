@@ -1,5 +1,8 @@
 package com.blog.service;
+import com.blog.entity.Article;
 import com.blog.result.Result;
+
+import java.util.List;
 
 /**
 * @author 86155
@@ -21,5 +24,4 @@ public interface ArticleService{
     Result deleteArticle(Long id);
 
     Result updateArticle(com.blog.entity.Article article);
-
 }

@@ -111,7 +111,6 @@ public class ArticleServiceImpl implements ArticleService{
         if (userId != articlePublisherId) {
             return Result.error(50016, MessageConstant.RIGHT_ERROR);
         }
-        article.setUpdateTime(new Date());
         int i = articleMapper.updateArticle(article);
         return Result.success(null);
     }

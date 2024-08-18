@@ -15,11 +15,6 @@
             <result property="articleLike" column="article_like" jdbcType="INTEGER"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        article_id,title,content,
-        user_id,image,publish_time,
-        update_time,article_like
-    </sql>
     <insert id="saveArticle">
         insert into article(title,content,user_id,image,publish_time,article_like,update_time)
         values (#{title},#{content},#{userId},#{image},#{publishTime},0,#{updateTime});
@@ -37,8 +32,11 @@
             <if test="image != null and image != ''">
                 image=#{image},
             </if>
+            <if test="articleLike != null">
+                article_like = #{articleLike}
+            </if>
         </set>
-        ,update_time=#{updateTime}
+        ,update_time= now()
         where article_id=#{id};
     </update>
 
@@ -54,7 +52,6 @@
         select article_id id,title,content,article_like,username,image from article a
                                                                                 left join user u on a.user_id = u.user_id
                                                                                 where u.user_id=#{id};
-
     </select>
     <select id="selectByArticleId" resultType="com.blog.pojo.SaveArticle">
         select title,content,image from article where article_id=#{id};
@@ -66,5 +63,22 @@
     </select>
     <select id="countComment" resultType="integer">
         select COUNT(comment_id) from comment where article_id = #{id};
+    </select>
+    <select id="getArticle" resultType="com.blog.entity.Article">
+        select article_id id,title,content,user_id,image,publish_time,update_time,article_like from article
+        <where>
+            <if test="id != null">
+                and article_id = #{id}
+            </if>
+            <if test="title != null and title != ''">
+                and title like concat('%',#{title},'%')
+            </if>
+            <if test="content != null and content != ''">
+                and content like concat('%',#{content},'%')
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
     </select>
 </mapper>

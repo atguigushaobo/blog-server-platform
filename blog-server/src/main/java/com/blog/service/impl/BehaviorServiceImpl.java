@@ -4,24 +4,29 @@ import com.blog.entity.*;
 import com.blog.exception.DeleteCommentException;
 import com.blog.exception.IsLikeParamException;
 import com.blog.exception.ParamException;
+import com.blog.mapper.ArticleMapper;
 import com.blog.mapper.BehaviorMapper;
 import com.blog.mapper.BehaviorMapper;
+import com.blog.pojo.SaveArticle;
 import com.blog.service.BehaviorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BehaviorServiceImpl implements BehaviorService {
     @Autowired
     private BehaviorMapper behaviorMapper;
+    @Autowired
+    private ArticleMapper articleMapper;
     /**
      * 点赞，取消点赞
      */
     @Override
-    public void likeOperate(Behavior behavior){
+    public String likeOperate(Behavior behavior){
         if(behavior.getIsLike()==null||behavior.getArticleId()==null)
         {
             throw new ParamException("参数不能为空！");
@@ -31,10 +36,37 @@ public class BehaviorServiceImpl implements BehaviorService {
         }
         behavior.setUserId(BaseContext.getCurrentId());
         if(behaviorMapper.behaviorExist(behavior)!=null){
-            behaviorMapper.behaviorUpdate(behavior);
-        }
-        else {
+            Article articleWrapper = new Article();
+            articleWrapper.setId(behavior.getArticleId());
+            Article article = articleMapper.getArticle(articleWrapper).get(0);
+            if(behavior.getIsLike() > behaviorMapper.isLike(behavior.getArticleId())){
+                article.setArticleLike(article.getArticleLike() + 1);
+                behaviorMapper.behaviorUpdate(behavior);
+                articleMapper.updateArticle(article);
+                return "点赞成功";
+            }else if(behavior.getIsLike() < behaviorMapper.isLike(behavior.getArticleId())){
+                article.setArticleLike(article.getArticleLike() - 1);
+                behaviorMapper.behaviorUpdate(behavior);
+                articleMapper.updateArticle(article);
+                return "取消点赞成功";
+            }
+            if(1 == behavior.getIsLike()){
+                return "重复点赞";
+            }else{
+                return "重复取消点赞";
+            }
+        } else {
             behaviorMapper.behaviorInsert(behavior);
+            if(1 == behavior.getIsLike()){
+                Article articleWrapper = new Article();
+                articleWrapper.setId(behavior.getArticleId());
+                Article article = articleMapper.getArticle(articleWrapper).get(0);
+                article.setArticleLike(article.getArticleLike() + 1);
+                articleMapper.updateArticle(article);
+                return "点赞成功";
+            }else{
+                return "重复取消点赞";
+            }
         }
     }
     /**
@@ -66,10 +98,9 @@ public class BehaviorServiceImpl implements BehaviorService {
     @Override
     public void delComment(long commentId) {
         Long userId = behaviorMapper.queryComment(commentId).get(0).getUserId();
-        if(userId == BaseContext.getCurrentId()){
+        if(Objects.equals(userId, BaseContext.getCurrentId())){
             behaviorMapper.delComment(commentId);
-        }
-        else {
+        } else {
             throw new DeleteCommentException("只能删除自己的评论!");
         }
     }

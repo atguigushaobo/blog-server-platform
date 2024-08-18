@@ -7,7 +7,7 @@ public interface BehaviorService {
     /**
      * 点赞，取消点赞
      */
-    void likeOperate(Behavior behavior);
+    String likeOperate(Behavior behavior);
     /**
      * 查询所有评论
      */

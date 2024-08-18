@@ -22,9 +22,7 @@ public class BehaviourController {
     private BehaviorService behaviorService;
     @PostMapping("/likeOperate")
     public Result likeOperate(@RequestBody Behavior behavior){
-
-        behaviorService.likeOperate(behavior);
-        return Result.success(null);
+        return Result.success(behaviorService.likeOperate(behavior));
     }
     @GetMapping("/listComment/{articleId}")
     @ResponseBody

@@ -1,5 +1,6 @@
 package com.blog.mapper;
 
+import com.blog.entity.Article;
 import com.blog.pojo.SaveArticle;
 import com.blog.pojo.SelectArticle;
 import com.blog.pojo.ShowArticle;
@@ -33,6 +34,7 @@ public interface ArticleMapper {
 
     int saveArticle(com.blog.entity.Article article);
 
+    List<Article> getArticle(Article article);
 }
 
 
