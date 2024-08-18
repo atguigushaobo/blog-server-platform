@@ -16,7 +16,21 @@
             insert into comment (article_id,user_id,comment_body,create_time)values (#{articleId},#{userId},#{commentBody},#{createTime})
     </insert>
     <select id="queryComment" resultType="com.blog.entity.Comment">
-            select * from comment c left join user u on c.user_id = u.user_id where comment_id = #{commentId}
+            select c.*,u.username from comment c left join user u on c.user_id = u.user_id
+        <where>
+            <if test="articleId != null">
+                and c.article_id = #{articleId}
+            </if>
+            <if test="commentId != null">
+                and c.comment_id = #{commentId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="commentBody != null and commentBody != ''">
+                and comment_body like concat('%',#{commentBody},'%')
+            </if>
+        </where>
     </select>
     <delete id="delComment">
             delete from comment where comment_id = #{commentId}

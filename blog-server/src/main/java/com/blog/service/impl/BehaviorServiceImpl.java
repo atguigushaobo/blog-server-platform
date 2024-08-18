@@ -77,7 +77,9 @@ public class BehaviorServiceImpl implements BehaviorService {
      */
     @Override
     public List<Comment> queryComment(Long articleId){
-        List<Comment> comments = behaviorMapper.queryComment(articleId);
+        Comment comment = new Comment();
+        comment.setArticleId(articleId);
+        List<Comment> comments = behaviorMapper.queryComment(comment);
         System.out.println(comments);
         return comments;
     }
@@ -100,9 +102,11 @@ public class BehaviorServiceImpl implements BehaviorService {
      */
     @Override
     public void delComment(long commentId) {
-        List<Comment> list = behaviorMapper.queryComment(commentId);
+        Comment comment = new Comment();
+        comment.setCommentId(commentId);
+        List<Comment> list = behaviorMapper.queryComment(comment);
         if(null != list && list.size() > 0){
-            Long userId = behaviorMapper.queryComment(commentId).get(0).getUserId();
+            Long userId = list.get(0).getUserId();
             if(Objects.equals(userId, BaseContext.getCurrentId())){
                 behaviorMapper.delComment(commentId);
             } else {

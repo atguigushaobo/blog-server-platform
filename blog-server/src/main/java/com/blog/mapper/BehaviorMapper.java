@@ -22,7 +22,7 @@ public interface BehaviorMapper {
     /**
      * 查询所有评论
      */
-    List<Comment> queryComment(Long commentId);
+    List<Comment> queryComment(Comment comment);
     /**
      * 新增评论
      */
