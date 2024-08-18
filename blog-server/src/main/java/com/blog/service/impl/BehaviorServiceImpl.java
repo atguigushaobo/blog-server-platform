@@ -3,6 +3,7 @@ import com.blog.context.BaseContext;
 import com.blog.entity.*;
 import com.blog.exception.DeleteCommentException;
 import com.blog.exception.IsLikeParamException;
+import com.blog.exception.NoSuchCommentException;
 import com.blog.exception.ParamException;
 import com.blog.mapper.ArticleMapper;
 import com.blog.mapper.BehaviorMapper;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import static com.blog.constant.MessageConstant.NO_SUCH_COMMENT_ERROR;
 
 @Service
 public class BehaviorServiceImpl implements BehaviorService {
@@ -97,11 +100,16 @@ public class BehaviorServiceImpl implements BehaviorService {
      */
     @Override
     public void delComment(long commentId) {
-        Long userId = behaviorMapper.queryComment(commentId).get(0).getUserId();
-        if(Objects.equals(userId, BaseContext.getCurrentId())){
-            behaviorMapper.delComment(commentId);
-        } else {
-            throw new DeleteCommentException("只能删除自己的评论!");
+        List<Comment> list = behaviorMapper.queryComment(commentId);
+        if(null != list && list.size() > 0){
+            Long userId = behaviorMapper.queryComment(commentId).get(0).getUserId();
+            if(Objects.equals(userId, BaseContext.getCurrentId())){
+                behaviorMapper.delComment(commentId);
+            } else {
+                throw new DeleteCommentException("只能删除自己的评论!");
+            }
+        }else{
+            throw new NoSuchCommentException(NO_SUCH_COMMENT_ERROR);
         }
     }
 }

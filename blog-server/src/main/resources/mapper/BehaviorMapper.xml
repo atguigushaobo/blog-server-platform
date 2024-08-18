@@ -16,7 +16,7 @@
             insert into comment (article_id,user_id,comment_body,create_time)values (#{articleId},#{userId},#{commentBody},#{createTime})
     </insert>
     <select id="queryComment" resultType="com.blog.entity.Comment">
-            select * from comment c left join user u on c.user_id = u.user_id where article_id = #{articleId}
+            select * from comment c left join user u on c.user_id = u.user_id where comment_id = #{commentId}
     </select>
     <delete id="delComment">
             delete from comment where comment_id = #{commentId}

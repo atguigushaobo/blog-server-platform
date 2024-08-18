@@ -15,4 +15,5 @@ public class MessageConstant {
     public static final String FILE_UPLOAD_FAILED = "文件上传失败";
     public static final String RIGHT_ERROR = "权限不允许";
     public static final String NOSUSH_ARTICLE = "没有该文章";
+    public static final String NO_SUCH_COMMENT_ERROR = "没有此评论";
 }
