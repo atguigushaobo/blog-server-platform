@@ -65,7 +65,8 @@ public class BehaviorServiceImpl implements BehaviorService {
      */
     @Override
     public void delComment(long commentId) {
-        if(commentId==BaseContext.getCurrentId()){
+        Long userId = behaviorMapper.queryComment(commentId).get(0).getUserId();
+        if(userId == BaseContext.getCurrentId()){
             behaviorMapper.delComment(commentId);
         }
         else {

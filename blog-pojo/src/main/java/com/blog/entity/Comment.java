@@ -1,5 +1,6 @@
 package com.blog.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,9 @@ import java.util.Date;
 public class Comment implements Serializable {
     @JsonIgnore
     private Long commentId;//自增主键
+    @JsonProperty("comment")
     private String commentBody;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
     private Long userId;
     private String username;
