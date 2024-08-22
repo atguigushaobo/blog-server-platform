@@ -3,13 +3,16 @@ package com.blog.service.impl;
 import com.blog.constant.MessageConstant;
 import com.blog.context.BaseContext;
 import com.blog.entity.Article;
+import com.blog.entity.Comment;
 import com.blog.mapper.ArticleMapper;
+import com.blog.mapper.BehaviorMapper;
 import com.blog.pojo.SaveArticle;
 import com.blog.pojo.ShowArticle;
 import com.blog.result.Result;
 import com.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -23,6 +26,8 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService{
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private BehaviorMapper behaviorMapper;
     @Override
     public Result load() {
         List list = articleMapper.load();
@@ -77,9 +82,13 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
+    @Transactional
     public Result deleteArticle(Long id) {
         //非用户本人不能删除
         Long userId = BaseContext.getCurrentId();
+        Comment comment = Comment.builder()
+                .articleId(id)
+                .build();
         //测试使用userId
 //        Long userId = 2L;
         ShowArticle showArticle = articleMapper.showArticle(id);
@@ -88,10 +97,9 @@ public class ArticleServiceImpl implements ArticleService{
         }
         long articlePublisherId = showArticle.getUserId();
         if (userId == articlePublisherId) {
-            Integer i = articleMapper.deleteByArticleId(id);
-            if(i<=0){
-                return Result.error(50016,MessageConstant.UNKNOWERROR);
-            }
+            articleMapper.deleteByArticleId(id);
+            behaviorMapper.delComment(comment);
+            behaviorMapper.delBehaviorByArticleId(id);
             return Result.success(null);
         }
         return Result.error(50015, MessageConstant.RIGHT_ERROR);

@@ -33,6 +33,17 @@
         </where>
     </select>
     <delete id="delComment">
-            delete from comment where comment_id = #{commentId}
+            delete from comment
+        <where>
+            <if test="commentId != null">
+                and comment_id = #{commentId}
+            </if>
+            <if test="articleId != null">
+                and article_id = #{articleId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
     </delete>
 </mapper>

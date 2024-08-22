@@ -7,8 +7,6 @@ import com.blog.exception.NoSuchCommentException;
 import com.blog.exception.ParamException;
 import com.blog.mapper.ArticleMapper;
 import com.blog.mapper.BehaviorMapper;
-import com.blog.mapper.BehaviorMapper;
-import com.blog.pojo.SaveArticle;
 import com.blog.service.BehaviorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,7 +106,7 @@ public class BehaviorServiceImpl implements BehaviorService {
         if(null != list && list.size() > 0){
             Long userId = list.get(0).getUserId();
             if(Objects.equals(userId, BaseContext.getCurrentId())){
-                behaviorMapper.delComment(commentId);
+                behaviorMapper.delComment(comment);
             } else {
                 throw new DeleteCommentException("只能删除自己的评论!");
             }
