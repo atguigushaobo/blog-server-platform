@@ -32,7 +32,7 @@ blog:
 
     user-secret-key: blog
 
-    user-ttl: 7200000
+    user-ttl: 14400000
 
     user-token-name: Authorization
 

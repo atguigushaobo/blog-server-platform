@@ -25,7 +25,7 @@
                 and c.comment_id = #{commentId}
             </if>
             <if test="userId != null">
-                and user_id = #{userId}
+                and c.user_id = #{userId}
             </if>
             <if test="commentBody != null and commentBody != ''">
                 and comment_body like concat('%',#{commentBody},'%')

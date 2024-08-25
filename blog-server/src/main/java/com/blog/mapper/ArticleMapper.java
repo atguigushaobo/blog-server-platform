@@ -4,6 +4,7 @@ import com.blog.entity.Article;
 import com.blog.pojo.SaveArticle;
 import com.blog.pojo.SelectArticle;
 import com.blog.pojo.ShowArticle;
+import com.blog.vo.SelectAllArticleVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,11 +20,11 @@ public interface ArticleMapper {
 
     List<SelectArticle> load();
 
-    List<SelectArticle> selectByUserId(Long id);
+    List<Article> selectByUserId(Long id);
 
-    SaveArticle selectByArticleId(Long id);
+    Article selectByArticleId(Long id);
 
-    ShowArticle showArticle(Long id);
+    Article showArticle(Long id);
 
     Integer countComment(Long id);
 

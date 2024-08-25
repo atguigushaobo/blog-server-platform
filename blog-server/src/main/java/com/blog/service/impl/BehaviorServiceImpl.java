@@ -1,15 +1,14 @@
 package com.blog.service.impl;
+import com.blog.constant.MessageConstant;
 import com.blog.context.BaseContext;
 import com.blog.entity.*;
-import com.blog.exception.DeleteCommentException;
-import com.blog.exception.IsLikeParamException;
-import com.blog.exception.NoSuchCommentException;
-import com.blog.exception.ParamException;
+import com.blog.exception.*;
 import com.blog.mapper.ArticleMapper;
 import com.blog.mapper.BehaviorMapper;
 import com.blog.service.BehaviorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -27,6 +26,7 @@ public class BehaviorServiceImpl implements BehaviorService {
      * 点赞，取消点赞
      */
     @Override
+    @Transactional
     public String likeOperate(Behavior behavior){
         if(behavior.getIsLike()==null||behavior.getArticleId()==null)
         {
@@ -61,10 +61,14 @@ public class BehaviorServiceImpl implements BehaviorService {
             if(1 == behavior.getIsLike()){
                 Article articleWrapper = new Article();
                 articleWrapper.setId(behavior.getArticleId());
-                Article article = articleMapper.getArticle(articleWrapper).get(0);
-                article.setArticleLike(article.getArticleLike() + 1);
-                articleMapper.updateArticle(article);
-                return "点赞成功";
+                List<Article> list = articleMapper.getArticle(articleWrapper);
+                if(null != list && list.size() > 0){
+                    Article article = list.get(0);
+                    article.setArticleLike(article.getArticleLike() + 1);
+                    articleMapper.updateArticle(article);
+                    return "点赞成功";
+                }
+                throw new NoSuchArticleException(MessageConstant.NOSUSH_ARTICLE);
             }else{
                 return "重复取消点赞";
             }
@@ -87,9 +91,11 @@ public class BehaviorServiceImpl implements BehaviorService {
     @Override
     public void addComment(Comment comment){
         System.out.println(comment);
-        if(comment.getCommentBody()==null||comment.getArticleId()==null)
-        {
+        if(comment.getCommentBody()==null||comment.getArticleId()==null) {
             throw new ParamException("参数不能为空！");
+        }
+        if(null == articleMapper.selectByArticleId(comment.getArticleId())){
+            throw new NoSuchArticleException(MessageConstant.NOSUSH_ARTICLE);
         }
         comment.setUserId(BaseContext.getCurrentId());
         comment.setCreateTime(new Date());

@@ -48,16 +48,17 @@
                                                            left join user u on a.user_id = u.user_id;
 
     </select>
-    <select id="selectByUserId" resultType="com.blog.pojo.SelectArticle">
-        select article_id id,title,content,article_like,username,image from article a
+    <select id="selectByUserId" resultType="article">
+        select article_id id,title,content,a.user_id,image,publish_time,a.update_time,article_like,u.username from article a
                                                                                 left join user u on a.user_id = u.user_id
                                                                                 where u.user_id=#{id};
     </select>
-    <select id="selectByArticleId" resultType="com.blog.pojo.SaveArticle">
-        select title,content,image from article where article_id=#{id};
+    <select id="selectByArticleId" resultType="article">
+        select article_id id,title,content,a.user_id,image,publish_time,a.update_time,article_like,u.username from article a left join user u on a.user_id = u.user_id
+                where article_id=#{id};
     </select>
-    <select id="showArticle" resultType="com.blog.pojo.ShowArticle">
-        select article_id id,title,content,a.user_id ,username,image,article_like,publish_time  from article a
+    <select id="showArticle" resultType="article">
+        select article_id id,title,content,a.user_id ,username,image,article_like,publish_time,a.update_time  from article a
                                                                                                     left join user u on a.user_id = u.user_id
                                                                                                     where a.article_id=#{id};
     </select>

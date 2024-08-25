@@ -10,10 +10,15 @@ import com.blog.pojo.SaveArticle;
 import com.blog.pojo.ShowArticle;
 import com.blog.result.Result;
 import com.blog.service.ArticleService;
+import com.blog.vo.SelectAllArticleVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,14 +44,20 @@ public class ArticleServiceImpl implements ArticleService{
     public Result selectById(Long id) {
         long userId = BaseContext.getCurrentId();
         if (userId ==  id) {
-            List list = articleMapper.selectByUserId(id);
-            return Result.success(list);
+            List<Article> list = articleMapper.selectByUserId(id);
+            List<SelectAllArticleVO> articles = new ArrayList();
+            for(Article article : list) {
+                SelectAllArticleVO selectAllArticle = new SelectAllArticleVO();
+                BeanUtils.copyProperties(article,selectAllArticle);//这里当时我们的属性拷贝方法失效了，因为我们的SelectAllArticle实体类没有get/set方法，所以无效
+                articles.add(selectAllArticle);
+            }
+            return Result.success(articles);
         }
         return Result.error(50014, MessageConstant.RIGHT_ERROR);
     }
 
     @Override
-    public Result saveArticle(com.blog.entity.Article saveArticle) {
+    public Result saveArticle(Article saveArticle) {
         //从BaseContext中获取userId
         Long userid = BaseContext.getCurrentId();
         //测试使用userId
@@ -63,7 +74,7 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public Result selectByArticleId(Long id) {
-        SaveArticle saveArticle = articleMapper.selectByArticleId(id);
+        Article saveArticle = articleMapper.selectByArticleId(id);
         if (saveArticle == null) {
             return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);
         }
@@ -72,7 +83,7 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public Result articleDetails(Long id) {
-        ShowArticle showArticle = articleMapper.showArticle(id);
+        Article showArticle = articleMapper.showArticle(id);
         if (showArticle == null) {
             return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);
         }
@@ -91,7 +102,7 @@ public class ArticleServiceImpl implements ArticleService{
                 .build();
         //测试使用userId
 //        Long userId = 2L;
-        ShowArticle showArticle = articleMapper.showArticle(id);
+        Article showArticle = articleMapper.showArticle(id);
         if (showArticle == null) {
             return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);
         }
@@ -111,7 +122,7 @@ public class ArticleServiceImpl implements ArticleService{
         Long userId = BaseContext.getCurrentId();
         //测试Id
 //        long userId = 2L;
-        ShowArticle showArticle = articleMapper.showArticle(article.getId());
+        Article showArticle = articleMapper.showArticle(article.getId());
         if (showArticle == null) {
             return Result.error(50015, MessageConstant.NOSUSH_ARTICLE);
         }
