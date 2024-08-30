@@ -19,6 +19,6 @@ public interface BehaviorService {
     /**
     * 删除评论
      */
-    void delComment(long commentId);
+    void delComment(Long commentId);
 
 }

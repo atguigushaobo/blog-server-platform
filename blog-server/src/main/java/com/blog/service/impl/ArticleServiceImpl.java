@@ -58,10 +58,10 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public Result saveArticle(Article saveArticle) {
         //从BaseContext中获取userId
-        Long userid = BaseContext.getCurrentId();
+        Long userId = BaseContext.getCurrentId();
         //测试使用userId
 //        Long userid = 1L;
-        saveArticle.setUserId(userid);
+        saveArticle.setUserId(userId);//如果userId为null会在执行SQL语句时报错
         saveArticle.setPublishTime(new Date());
         saveArticle.setUpdateTime(new Date());
         int i = articleMapper.saveArticle(saveArticle);
@@ -95,9 +95,9 @@ public class ArticleServiceImpl implements ArticleService{
     @Transactional
     public Result deleteArticle(Long id) {
         //非用户本人不能删除
-        Long userId = BaseContext.getCurrentId();
+        Long userId = BaseContext.getCurrentId();//我们的Long类型赋值是调用valueOf方法来赋值的，可以赋值为null
         Comment comment = Comment.builder()
-                .articleId(id)
+                .articleId(id)//
                 .build();
         //测试使用userId
 //        Long userId = 2L;

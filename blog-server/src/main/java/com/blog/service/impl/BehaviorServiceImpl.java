@@ -105,7 +105,7 @@ public class BehaviorServiceImpl implements BehaviorService {
      * 删除评论
      */
     @Override
-    public void delComment(long commentId) {
+    public void delComment(Long commentId) {
         Comment comment = new Comment();
         comment.setCommentId(commentId);
         List<Comment> list = behaviorMapper.queryComment(comment);
