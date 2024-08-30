@@ -32,7 +32,7 @@ blog:
 
     user-secret-key: blog
 
-    user-ttl: 14400000
+    user-ttl: 28800000
 
     user-token-name: Authorization
 
@@ -49,4 +49,4 @@ blog:
 
   file:
     real-path: blog-server/src/main/resources/static/images #文件存储在项目中的位置
-    url: http://localhost:8888/static/images/ #这里如果是和前端一块联调的话，需要改成我们的公网ip
+    url: http://tctfuw.natappfree.cc/static/images/ #这里如果是和前端一块联调的话，需要改成我们的公网ip

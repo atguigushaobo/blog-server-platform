@@ -28,7 +28,7 @@
         <jjwt>0.9.1</jjwt>
         <jaxb-api>2.3.1</jaxb-api>
         <pagehelper>1.4.1</pagehelper>
-        <druid>1.2.1</druid>
+        <druid>1.2.9</druid>
         <hutool>5.7.15</hutool>
         <!--UTF-8编码项目-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

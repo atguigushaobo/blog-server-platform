@@ -35,6 +35,12 @@ public class LoginService{
      * @return
      */
     public String loginCheck(UserLoginDTO userLoginDTO, HttpServletRequest request) {
+        if(userLoginDTO.getUsername() == null || userLoginDTO.getUsername().equals("")){
+            throw new AccountOrPwdException("账号为空,无法登陆");
+        }else if(userLoginDTO.getPassword() == null || userLoginDTO.getPassword().equals("")){
+            throw new AccountOrPwdException("密码为空,无法登陆");
+        }
+
         HttpSession session = request.getSession();
         if(session.isNew()){
             session.invalidate();

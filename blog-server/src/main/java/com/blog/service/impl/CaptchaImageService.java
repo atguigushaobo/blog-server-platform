@@ -79,7 +79,7 @@ public class CaptchaImageService {
         ImageIO.write(bufferedImage, "jpeg", baos);
         // 将ByteArrayOutputStream转换为ByteArrayInputStream
         byte[] imageInBytes = baos.toByteArray();
-        return Base64.getEncoder().encodeToString(imageInBytes);
+        return Base64.getEncoder().encodeToString(imageInBytes);//这种加密方式不会换行
         //输出
 //            IoUtil.write(response.getOutputStream(), true, imageInBytes);
     }

@@ -35,8 +35,8 @@ public interface BehaviorMapper {
     /**
      * 获取文章点赞信息
      */
-    @Select("select is_like from behaviour where article_id = #{articleId}")
-    Integer isLike(Long articleId);
+    @Select("select is_like from behaviour where user_id = #{userId} and article_id = #{articleId}")
+    Integer isLike(Long userId,Long articleId);
 
     /**
      * 删除某文章的相关信息

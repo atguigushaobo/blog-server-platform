@@ -49,9 +49,9 @@
 
     </select>
     <select id="selectByUserId" resultType="article">
-        select article_id id,title,content,a.user_id,image,publish_time,a.update_time,article_like,u.username from article a
-                                                                                left join user u on a.user_id = u.user_id
-                                                                                where u.user_id=#{id};
+        select article_id id,title,content,a.user_id,image,publish_time,a.update_time,article_like,u.username
+        from article a,user u where u.user_id = #{id} AND a.user_id = #{id}
+
     </select>
     <select id="selectByArticleId" resultType="article">
         select article_id id,title,content,a.user_id,image,publish_time,a.update_time,article_like,u.username from article a left join user u on a.user_id = u.user_id

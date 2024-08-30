@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/login")
 public class LoginController {
     @Autowired
     private LoginService loginService;
@@ -25,7 +24,7 @@ public class LoginController {
      * @param userLoginDTO
      * @return
      */
-    @PostMapping
+    @PostMapping("/login")
     public Result<String> login(@RequestBody UserLoginDTO userLoginDTO, HttpServletRequest request){
         String token = loginService.loginCheck(userLoginDTO,request);
         return Result.success(token);

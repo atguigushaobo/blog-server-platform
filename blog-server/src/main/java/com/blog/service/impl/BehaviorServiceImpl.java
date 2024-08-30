@@ -40,12 +40,12 @@ public class BehaviorServiceImpl implements BehaviorService {
             Article articleWrapper = new Article();
             articleWrapper.setId(behavior.getArticleId());
             Article article = articleMapper.getArticle(articleWrapper).get(0);
-            if(behavior.getIsLike() > behaviorMapper.isLike(behavior.getArticleId())){
+            if(behavior.getIsLike() > behaviorMapper.isLike(behavior.getUserId(),behavior.getArticleId())){
                 article.setArticleLike(article.getArticleLike() + 1);
                 behaviorMapper.behaviorUpdate(behavior);
                 articleMapper.updateArticle(article);
                 return "点赞成功";
-            }else if(behavior.getIsLike() < behaviorMapper.isLike(behavior.getArticleId())){
+            }else if(behavior.getIsLike() < behaviorMapper.isLike(behavior.getUserId(),behavior.getArticleId())){
                 article.setArticleLike(article.getArticleLike() - 1);
                 behaviorMapper.behaviorUpdate(behavior);
                 articleMapper.updateArticle(article);

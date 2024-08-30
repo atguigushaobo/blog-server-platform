@@ -1,6 +1,8 @@
 package com.blog.result;
 
-public class  Result<T> {
+import java.io.Serializable;
+
+public class  Result<T> implements Serializable {
     /**
      * 错误码
      */

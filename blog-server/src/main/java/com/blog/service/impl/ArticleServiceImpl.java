@@ -42,10 +42,9 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public Result selectById(Long id) {
-        long userId = BaseContext.getCurrentId();
-        if (userId ==  id) {
-            List<Article> list = articleMapper.selectByUserId(id);
-            List<SelectAllArticleVO> articles = new ArrayList();
+        List<Article> list = articleMapper.selectByUserId(id);
+        List<SelectAllArticleVO> articles = new ArrayList();
+        if(list != null && list.size() > 0){
             for(Article article : list) {
                 SelectAllArticleVO selectAllArticle = new SelectAllArticleVO();
                 BeanUtils.copyProperties(article,selectAllArticle);//这里当时我们的属性拷贝方法失效了，因为我们的SelectAllArticle实体类没有get/set方法，所以无效
@@ -53,7 +52,7 @@ public class ArticleServiceImpl implements ArticleService{
             }
             return Result.success(articles);
         }
-        return Result.error(50014, MessageConstant.RIGHT_ERROR);
+        return Result.success("用户没有创作过文章");
     }
 
     @Override
